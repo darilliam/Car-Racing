@@ -14,9 +14,10 @@ Prototyp auta v reálném světě:
 
 **2018 Bentley Continental GT**<br/>
 Informace: [https://www.encycarpedia.com/bentley/18-continental-gt-coupe](https://www.encycarpedia.com/bentley/18-continental-gt-coupe)
-* Wheelbase	2,851 mm
-* Turning Circle 11,5 m
-* Rear Track 1,664 mm
+* Wheelbase: 2,851 mm
+* Turning Circle: 11,5 m
+* Rear Track: 1,664 mm
+* Driven Wheels: AWD (All-wheel Drive)
 
 -----
 ## Silnice

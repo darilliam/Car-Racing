@@ -12,9 +12,21 @@ public class CameraFollow : MonoBehaviour
 
     public Transform playerTarget;
 
+    private GameObject player;
+    private CarController carController;
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        carController = player.GetComponent<CarController>();
+    }
+
     private void FixedUpdate()
     {
         FollowPlayer();
+
+        // Modify the camera speed according to the car kph 
+        smoothnessMove = (carController.KPH >= 50) ? 20 : carController.KPH / 4;
     }
 
     private void FollowPlayer()

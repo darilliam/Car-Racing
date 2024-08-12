@@ -10,11 +10,13 @@ public class CarController : MonoBehaviour
         rearWheelDrive,
         allWheelDrive
     }
-    [SerializeField]private DriveType driveType;
+    [SerializeField]
+    private DriveType driveType;
 
     // Array of wheel colliders
     public WheelCollider[] wheels = new WheelCollider[4];
     public GameObject[] wheelMesh = new GameObject[4];
+    private GameObject centerOffMass;
     public int motorTorque = 100;
     public float steeringMax = 25;
 
@@ -22,12 +24,14 @@ public class CarController : MonoBehaviour
     public float wheelBase; // in meters
     public float rearTrack; // in meters
     public float turnRadius; // in meters
+    public float downForceValue = 50;
+    public float handbrakePower;
 
-    //public float ackermannAngleLeft;
-    //public float ackermannAngleRight;
-
+    // Kilometres per hour
+    public float KPH;
 
     private InputManager inputManager;
+    private Rigidbody carRb;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +42,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        DownForce();
         AnimateWheel();
         CarMovement();
         SteerCar();
@@ -45,7 +50,7 @@ public class CarController : MonoBehaviour
 
     private void CarMovement()
     {
-        //float totalPower;
+        // float totalPower;
 
         if (driveType == DriveType.allWheelDrive)
         {
@@ -67,6 +72,18 @@ public class CarController : MonoBehaviour
             {
                 wheels[i].motorTorque = inputManager.vertical * (motorTorque / 2);
             }
+        }
+
+        // Kilometres per hour
+        KPH = carRb.velocity.magnitude * 3.6f; 
+
+        if(inputManager.handbrake)
+        {
+            wheels[2].brakeTorque = wheels[3].brakeTorque = handbrakePower;
+        }
+        else
+        {
+            wheels[2].brakeTorque = wheels[3].brakeTorque = 0;
         }
     }
 
@@ -93,6 +110,11 @@ public class CarController : MonoBehaviour
 
     }
 
+    private void DownForce()
+    {
+        carRb.AddForce(-transform.up * downForceValue * carRb.velocity.magnitude);
+    }
+
     private void AnimateWheel()
     {
         Vector3 wheelPosition = Vector3.zero;
@@ -109,5 +131,8 @@ public class CarController : MonoBehaviour
     private void Getobjects()
     {
         inputManager = GetComponent<InputManager>();
+        carRb = GetComponent<Rigidbody>();
+        centerOffMass = GameObject.Find("Mass");
+        carRb.centerOfMass = centerOffMass.transform.localPosition;
     }
 }
