@@ -46,6 +46,8 @@ public class CarController : MonoBehaviour
     public float KPH;
     [SerializeField] private float[] slip = new float[4];
 
+    [HideInInspector] public bool playPauseDriftSmoke = false;
+
     private InputManager _inputManager;
     private Rigidbody _carRb;
     private float _brakeInput;
@@ -181,13 +183,13 @@ public class CarController : MonoBehaviour
 
     private void AdjustTraction()
     {
-        // Time it takes to go from normal drive to drift
+        // Time factor for smoothing the transition from normal driving to drifting
         float driftSmothFactor = .7f * Time.deltaTime;
 
-        // If the brake pedal is depressed
+        // Check if the brake pedal is being pressed
         if (_inputManager.brakePedal)
         {
-            // Save the current friction parameters
+            // Store the current friction parameters for later adjustment
             _sidewaysFriction = wheels[0].wheelCollider.sidewaysFriction;
             _forwardFriction = wheels[0].wheelCollider.forwardFriction;
 
@@ -201,25 +203,26 @@ public class CarController : MonoBehaviour
             }
 
             float velocity = 0;
-            // Smoothly change the friction parameters for drifting
+            // Smoothly adjust friction values to facilitate drifting
             _sidewaysFriction.extremumValue = _sidewaysFriction.asymptoteValue = _forwardFriction.extremumValue = _forwardFriction.asymptoteValue =
                 Mathf.SmoothDamp(_forwardFriction.asymptoteValue, _driftFactorValue * handBrakeFrictionMultiplier,ref velocity ,driftSmothFactor );
 
-            // Apply the modified friction parameters to all wheels
+            // Apply the adjusted friction parameters to all wheels
             for (int i = 0; i < 4; i++) {
                 wheels[i].wheelCollider.sidewaysFriction = _sidewaysFriction;
                 wheels[i].wheelCollider.forwardFriction = _forwardFriction;
             }
 
-            // Increase traction for the front wheels
+            // Restore higher traction for the front wheels after the drift
             _sidewaysFriction.extremumValue = _sidewaysFriction.asymptoteValue = _forwardFriction.extremumValue = _forwardFriction.asymptoteValue =  1.1f;
 
-            // Extra grip for the front wheels
+            // Apply the updated traction to the front wheels for stability
             for (int i = 0; i < 2; i++) {
                 wheels[i].wheelCollider.sidewaysFriction = _sidewaysFriction;
                 wheels[i].wheelCollider.forwardFriction = _forwardFriction;
             }
 
+            // Apply force to the car in the forward direction during the drift
             _carRb.AddForce(transform.forward * (KPH / 400) * 40000 );
 
             Vector3 driftForceValue = transform.forward * (KPH / 400) * 40000;
@@ -227,30 +230,45 @@ public class CarController : MonoBehaviour
             Debug.Log("Horizontal Input: " + _inputManager.horizontal);
             Debug.Log("Vertical Input: " + _inputManager.vertical);
         }
-        // Executed when handbrake is being held
+        // Executed when brake pedal is not being held
         else
         {
-			_forwardFriction = wheels[0].wheelCollider.forwardFriction;
+            // Store the current friction parameters
+            _forwardFriction = wheels[0].wheelCollider.forwardFriction;
 			_sidewaysFriction = wheels[0].wheelCollider.sidewaysFriction;
 
-			_forwardFriction.extremumValue = _forwardFriction.asymptoteValue = _sidewaysFriction.extremumValue = _sidewaysFriction.asymptoteValue = 
+            // Adjust friction based on the car's speed to control traction
+            _forwardFriction.extremumValue = _forwardFriction.asymptoteValue = _sidewaysFriction.extremumValue = _sidewaysFriction.asymptoteValue = 
                 ((KPH * handBrakeFrictionMultiplier) / 300) + 1;
 
-			for (int i = 0; i < 4; i++) {
+            // Apply the adjusted friction parameters to all wheels
+            for (int i = 0; i < 4; i++) {
 				wheels[i].wheelCollider.forwardFriction = _forwardFriction;
 				wheels[i].wheelCollider.sidewaysFriction = _sidewaysFriction;
 
 			}
         }
 
-            //checks the amount of slip to control the drift
-		for(int i = 2;i<4 ;i++){
+        // Loop through the rear wheels to check the amount of slip
+        // This helps to dynamically adjust the drift factor based on the car's slip
+        for (int i = 2;i<4 ;i++){
 
             WheelHit wheelHit;
 
-            wheels[i].wheelCollider.GetGroundHit(out wheelHit);            
+            wheels[i].wheelCollider.GetGroundHit(out wheelHit);
 
-			if(wheelHit.sidewaysSlip < 0 ) _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip) ;
+            // Drift smoke
+            if(wheelHit.sidewaysSlip >= 0.3f || wheelHit.sidewaysSlip <= -0.3f || wheelHit.forwardSlip >= 0.3f || wheelHit.forwardSlip <= -0.3f)
+            {
+                playPauseDriftSmoke = true;
+            }
+            else
+            {
+                playPauseDriftSmoke = false;
+            }
+
+            // Adjust the drift factor based on the amount of sideways slip and input direction
+            if (wheelHit.sidewaysSlip < 0 ) _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip) ;
 
 			if(wheelHit.sidewaysSlip > 0 ) _driftFactorValue = (1 + _inputManager.horizontal )* Mathf.Abs(wheelHit.sidewaysSlip );
 		}

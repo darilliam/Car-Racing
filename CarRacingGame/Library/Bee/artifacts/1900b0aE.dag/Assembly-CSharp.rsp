@@ -354,6 +354,7 @@
 -analyzer:"D:/Program Files/Unity/2022.3.9f1-x86_64/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/CarController.cs"
+"Assets/Scripts/CarEffectsController.cs"
 "Assets/Scripts/InputManager.cs"
 -langversion:9.0
 
