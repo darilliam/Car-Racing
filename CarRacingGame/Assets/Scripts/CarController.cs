@@ -18,6 +18,8 @@ public class CarController : MonoBehaviour
     {
         public GameObject wheelMesh;
         public WheelCollider wheelCollider;
+        public GameObject wheelEffectsObj;
+        public ParticleSystem driftSmoke;
         public bool isForwardWheel;
     }
 
@@ -46,9 +48,10 @@ public class CarController : MonoBehaviour
     public float KPH;
     [SerializeField] private float[] slip = new float[4];
 
-    [HideInInspector] public bool playPauseDriftSmoke = false;
+    // [HideInInspector] public bool playPauseDriftSmoke = false;
 
     private InputManager _inputManager;
+    private CarLightsController _carLightsController;
     private Rigidbody _carRb;
     private float _brakeInput;
     private WheelFrictionCurve _forwardFriction;
@@ -71,6 +74,7 @@ public class CarController : MonoBehaviour
         Brake();
         SteerCar();
         Friction();
+        WheelEffects();
         CheckInput();
         LimitMaxSpeed();
         AdjustTraction();
@@ -173,10 +177,14 @@ public class CarController : MonoBehaviour
             if(_inputManager.brakePedal)
             {
                 wheel.wheelCollider.brakeTorque = 300 * brakeAcceleration * Time.deltaTime;
+                _carLightsController.isBackLightOn = true;
+                _carLightsController.OperateBackLights();
             }
             else
             {
                 wheel.wheelCollider.brakeTorque = 0;
+                _carLightsController.isBackLightOn = false;
+                _carLightsController.OperateBackLights();
             }
         }
     }
@@ -192,15 +200,6 @@ public class CarController : MonoBehaviour
             // Store the current friction parameters for later adjustment
             _sidewaysFriction = wheels[0].wheelCollider.sidewaysFriction;
             _forwardFriction = wheels[0].wheelCollider.forwardFriction;
-
-            if (_inputManager.horizontal > 0)
-            {
-                Debug.Log("R");
-            }
-            else if (_inputManager.horizontal < 0)
-            {
-                Debug.Log("L");
-            }
 
             float velocity = 0;
             // Smoothly adjust friction values to facilitate drifting
@@ -224,11 +223,6 @@ public class CarController : MonoBehaviour
 
             // Apply force to the car in the forward direction during the drift
             _carRb.AddForce(transform.forward * (KPH / 400) * 40000 );
-
-            Vector3 driftForceValue = transform.forward * (KPH / 400) * 40000;
-            Debug.Log("Drift Force Applied: " + driftForceValue);
-            Debug.Log("Horizontal Input: " + _inputManager.horizontal);
-            Debug.Log("Vertical Input: " + _inputManager.vertical);
         }
         // Executed when brake pedal is not being held
         else
@@ -257,21 +251,34 @@ public class CarController : MonoBehaviour
 
             wheels[i].wheelCollider.GetGroundHit(out wheelHit);
 
-            // Drift smoke
-            if(wheelHit.sidewaysSlip >= 0.3f || wheelHit.sidewaysSlip <= -0.3f || wheelHit.forwardSlip >= 0.3f || wheelHit.forwardSlip <= -0.3f)
+            // Adjust the drift factor based on the amount of sideways slip and input direction
+            if (wheelHit.sidewaysSlip < 0)
             {
-                playPauseDriftSmoke = true;
+                _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
+            }
+
+            if (wheelHit.sidewaysSlip > 0)
+            {
+                _driftFactorValue = (1 + _inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
+            }
+		}
+    }
+
+    private void WheelEffects()
+    {
+        foreach(var wheel in wheels)
+        {
+            if(_inputManager.brakePedal && !wheel.isForwardWheel && wheel.wheelCollider.isGrounded == true && _carRb.velocity.magnitude >= 10.0f)
+            {
+                wheel.wheelEffectsObj.GetComponentInChildren<TrailRenderer>().emitting = true;
+
+                wheel.driftSmoke.Emit(1);
             }
             else
             {
-                playPauseDriftSmoke = false;
+                wheel.wheelEffectsObj.GetComponentInChildren<TrailRenderer>().emitting = false;
             }
-
-            // Adjust the drift factor based on the amount of sideways slip and input direction
-            if (wheelHit.sidewaysSlip < 0 ) _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip) ;
-
-			if(wheelHit.sidewaysSlip > 0 ) _driftFactorValue = (1 + _inputManager.horizontal )* Mathf.Abs(wheelHit.sidewaysSlip );
-		}
+        }
     }
 
 
@@ -323,5 +330,7 @@ public class CarController : MonoBehaviour
         _inputManager = GetComponent<InputManager>();
         _carRb = GetComponent<Rigidbody>();
         _carRb.centerOfMass = _centerOfMass.localPosition;
+
+        _carLightsController = GetComponent<CarLightsController>();
     }
 }

@@ -15,6 +15,8 @@ public class InputManager : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
 
         // handbrake = (Input.GetAxis("Jump") != 0)? true : false;
-        brakePedal = (Input.GetKey(KeyCode.Space)) ? true : false;
+        // brakePedal = (Input.GetKey(KeyCode.Space)) ? true : false;
+
+        brakePedal = (Input.GetKey(KeyCode.J)) ? true : false;
     }
 }
