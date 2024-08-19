@@ -19,6 +19,8 @@ Informace: [https://www.encycarpedia.com/bentley/18-continental-gt-coupe](https:
 * Rear Track: 1,664 mm
 * Driven Wheels: AWD (All-wheel Drive)
 
+Car Engine Sound - Recording Sound FX By Jay Andrew Endico: [https://samplefocus.com/samples/car-engine-sound-recording-sound-fx](https://samplefocus.com/samples/car-engine-sound-recording-sound-fx)
+
 -----
 ## Silnice
 [https://www.civildailyinfo.com/engineering/how-to-find-out-the-exact-size-of-carriage-way-or-pavement.html](https://www.civildailyinfo.com/engineering/how-to-find-out-the-exact-size-of-carriage-way-or-pavement.html)

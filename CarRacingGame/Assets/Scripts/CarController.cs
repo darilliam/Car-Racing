@@ -52,12 +52,19 @@ public class CarController : MonoBehaviour
 
     private InputManager _inputManager;
     private CarLightsController _carLightsController;
+    //private CarSoundsController _carSoundsController;
+    private AudioManager _audioManager;
     private Rigidbody _carRb;
     private float _brakeInput;
     private WheelFrictionCurve _forwardFriction;
     private WheelFrictionCurve _sidewaysFriction;
     private float _driftFactorValue;
 
+
+    private void Awake()
+    {
+        _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -255,13 +262,17 @@ public class CarController : MonoBehaviour
             if (wheelHit.sidewaysSlip < 0)
             {
                 _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
+                //_carSoundsController.DriftSound();
+                //_audioManager.PlaySFX(_audioManager.driftSound);
             }
 
             if (wheelHit.sidewaysSlip > 0)
             {
                 _driftFactorValue = (1 + _inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
+                //_carSoundsController.DriftSound();
+                //_audioManager.PlaySFX(_audioManager.driftSound);
             }
-		}
+        }
     }
 
     private void WheelEffects()
@@ -272,7 +283,10 @@ public class CarController : MonoBehaviour
             {
                 wheel.wheelEffectsObj.GetComponentInChildren<TrailRenderer>().emitting = true;
 
+                _audioManager.PlaySFX(_audioManager.driftSound);
+
                 wheel.driftSmoke.Emit(1);
+
             }
             else
             {
