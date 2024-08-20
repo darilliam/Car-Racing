@@ -20,6 +20,7 @@ Informace: [https://www.encycarpedia.com/bentley/18-continental-gt-coupe](https:
 * Driven Wheels: AWD (All-wheel Drive)
 
 Car Engine Sound - Recording Sound FX By Jay Andrew Endico: [https://samplefocus.com/samples/car-engine-sound-recording-sound-fx](https://samplefocus.com/samples/car-engine-sound-recording-sound-fx)
+Car Drift Sound: [https://www.youtube.com/watch?v=GDEQUZgsVcE](https://www.youtube.com/watch?v=GDEQUZgsVcE)
 
 -----
 ## Silnice

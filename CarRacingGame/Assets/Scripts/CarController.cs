@@ -34,7 +34,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private float turnRadius; // in meters
     [SerializeField] private float maxSpeedKPH;
     [SerializeField] private float downForceValue = 50.0f;
-    // public float handbrakePower;
     [SerializeField] private float brakeAcceleration = 50.0f;
     [SerializeField] private float brakeForce;
     [SerializeField] private Transform _centerOfMass;
@@ -48,11 +47,8 @@ public class CarController : MonoBehaviour
     public float KPH;
     [SerializeField] private float[] slip = new float[4];
 
-    // [HideInInspector] public bool playPauseDriftSmoke = false;
-
     private InputManager _inputManager;
     private CarLightsController _carLightsController;
-    //private CarSoundsController _carSoundsController;
     private AudioManager _audioManager;
     private Rigidbody _carRb;
     private float _brakeInput;
@@ -115,17 +111,6 @@ public class CarController : MonoBehaviour
 
         // Kilometres per hour
         KPH = _carRb.velocity.magnitude * 3.6f; 
-
-        /*
-        if(_inputManager.handbrake)
-        {
-            wheels[2].wheelCollider.brakeTorque = wheels[3].wheelCollider.brakeTorque = handbrakePower;
-        }
-        else
-        {
-            wheels[2].wheelCollider.brakeTorque = wheels[3].wheelCollider.brakeTorque = 0;
-        }
-        */
     }
 
     private void LimitMaxSpeed()
@@ -262,15 +247,11 @@ public class CarController : MonoBehaviour
             if (wheelHit.sidewaysSlip < 0)
             {
                 _driftFactorValue = (1 + -_inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
-                //_carSoundsController.DriftSound();
-                //_audioManager.PlaySFX(_audioManager.driftSound);
             }
 
             if (wheelHit.sidewaysSlip > 0)
             {
                 _driftFactorValue = (1 + _inputManager.horizontal) * Mathf.Abs(wheelHit.sidewaysSlip);
-                //_carSoundsController.DriftSound();
-                //_audioManager.PlaySFX(_audioManager.driftSound);
             }
         }
     }
