@@ -358,6 +358,8 @@
 "Assets/Scripts/CarLightsController.cs"
 "Assets/Scripts/CarSoundsController.cs"
 "Assets/Scripts/InputManager.cs"
+"Assets/Scripts/PlacementController.cs"
+"Assets/Scripts/PlacementInputManager.cs"
 -langversion:9.0
 
 /deterministic
