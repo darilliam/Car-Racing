@@ -1,13 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlacementInputManager : MonoBehaviour
 {
     [SerializeField] private Camera sceneCamera;
     [SerializeField] private LayerMask placementMask;
 
+    public event Action OnClicked, OnExit;
+
+
     private Vector3 _finalPosition;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnClicked?.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        { 
+            OnExit?.Invoke(); 
+        }
+    }
+
+    public bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
 
     public Vector3 GetSelectedGridPosition()
     {
