@@ -15,5 +15,5 @@ MonoBehaviour:
   objectData:
   - <Name>k__BackingField: Straight Road
     <Id>k__BackingField: 0
-    <Size>k__BackingField: {x: 4, y: 2}
+    <Size>k__BackingField: {x: 5, y: 3}
     <Prefab>k__BackingField: {fileID: 2540935042113177991, guid: 61eaca339db57eb49be5b466ec80dc3a, type: 3}

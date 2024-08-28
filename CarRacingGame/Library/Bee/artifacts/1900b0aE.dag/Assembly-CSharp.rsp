@@ -363,6 +363,7 @@
 "Assets/Scripts/CarController.cs"
 "Assets/Scripts/CarLightsController.cs"
 "Assets/Scripts/CarSoundsController.cs"
+"Assets/Scripts/GridData.cs"
 "Assets/Scripts/InputManager.cs"
 "Assets/Scripts/ObjectsDatabase.cs"
 "Assets/Scripts/PlacementController.cs"
