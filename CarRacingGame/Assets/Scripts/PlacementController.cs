@@ -7,32 +7,32 @@ using UnityEngine;
 public class PlacementController : MonoBehaviour
 {
     [SerializeField] private GameObject mouseTag;
-    [SerializeField] private GameObject cellTag;
     [SerializeField] private Grid grid;
     [SerializeField] private PlacementInputManager inputManager;
     [SerializeField] private ObjectsDatabase objectsDatabase;
-    [SerializeField] private int selectedObjectIndex = -1;
     [SerializeField] private GameObject gridPlaneVisualization;
+    [SerializeField] private PreviewRoadPartsController previewRoadPartsController;
+    [SerializeField] private ObjectPlacer objectPlacer;
 
     private GridData _gridData; 
     private GridData _roadData;
-    private Renderer _previewRenderer;
-    private List<GameObject> _placedObjects = new List<GameObject>();
+    private Vector3Int _lastDetectedPos = Vector3Int.zero;
+    private IBuilldingState _builldingState;
 
     private void Start()
     {
         StopPlacement();
         _gridData = new GridData();
         _roadData = new GridData();
-        _previewRenderer = cellTag.GetComponent<Renderer>();
     }
 
     public void StartPlacement(int id)
     {
         StopPlacement();
-        selectedObjectIndex = objectsDatabase.objectData.FindIndex(data => data.Id == id);
         gridPlaneVisualization.SetActive(true);
-        cellTag.SetActive(true);
+
+        _builldingState = new PlacementState(grid, id, objectsDatabase, previewRoadPartsController, objectPlacer, _gridData, _roadData);
+
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -44,41 +44,23 @@ public class PlacementController : MonoBehaviour
         Vector3 mousePos = inputManager.GetSelectedGridPosition();
         Vector3Int gridPos = grid.WorldToCell(mousePos);
 
-        bool ifPlacementValid = CheckPlacementValidation(gridPos, selectedObjectIndex);
-        if(ifPlacementValid == false) return;
-
-        GameObject newGameObject = Instantiate(objectsDatabase.objectData[selectedObjectIndex].Prefab);
-        newGameObject.transform.position = grid.CellToWorld(gridPos);
-        Vector3 pos = cellTag.transform.position;
-        pos.y = 0.7f;
-        newGameObject.transform.position = pos;
-
-        _placedObjects.Add(newGameObject);
-
-        GridData selectedData = objectsDatabase.objectData[selectedObjectIndex].Id == 0 ? _gridData : _roadData;
-        selectedData.AddObject(gridPos, objectsDatabase.objectData[selectedObjectIndex].Size, objectsDatabase.objectData[selectedObjectIndex].Id, _placedObjects.Count - 1);
-
+       _builldingState.OnAction(gridPos);
     }
 
     private void StopPlacement()
     {
-        selectedObjectIndex= -1;
+        if(_builldingState == null) return;
         gridPlaneVisualization.SetActive(false);
-        cellTag.SetActive(false);
+        _builldingState.EnndState();
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
-    }
-
-    private bool CheckPlacementValidation(Vector3Int gridPos, int selectedObjectIndex)
-    {
-        GridData selectedData = objectsDatabase.objectData[selectedObjectIndex].Id == 0 ? _gridData : _roadData;
-
-        return selectedData.IfCanPlaceObject(gridPos, objectsDatabase.objectData[selectedObjectIndex].Size);
+        _lastDetectedPos = Vector3Int.zero;
+        _builldingState = null;
     }
 
     void Update()
     {
-        if (selectedObjectIndex < 0) return;
+        if (_builldingState == null) return;
 
         Vector3 mousePos = inputManager.GetSelectedGridPosition();
 
@@ -86,16 +68,11 @@ public class PlacementController : MonoBehaviour
         {
             Vector3Int gridPos = grid.WorldToCell(mousePos);
 
-            bool ifPlacementValid = CheckPlacementValidation(gridPos, selectedObjectIndex);
-            _previewRenderer.material.color = ifPlacementValid ? Color.white : Color.red;
-
-            mouseTag.transform.position = mousePos;
-            cellTag.transform.position = grid.CellToWorld(gridPos);
-            Vector3 pos = cellTag.transform.position;
-            pos.x += 5;
-            pos.z += 5;
-            pos.y = 0.6f;
-            cellTag.transform.position = pos;
+            if (_lastDetectedPos != gridPos)
+            {
+                _builldingState.UpdateState(gridPos);
+                _lastDetectedPos = gridPos;
+            }
         }
     }
 }

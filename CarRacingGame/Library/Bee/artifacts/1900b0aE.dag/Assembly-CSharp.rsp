@@ -364,10 +364,14 @@
 "Assets/Scripts/CarLightsController.cs"
 "Assets/Scripts/CarSoundsController.cs"
 "Assets/Scripts/GridData.cs"
+"Assets/Scripts/IBuilldingState.cs"
 "Assets/Scripts/InputManager.cs"
+"Assets/Scripts/ObjectPlacer.cs"
 "Assets/Scripts/ObjectsDatabase.cs"
 "Assets/Scripts/PlacementController.cs"
 "Assets/Scripts/PlacementInputManager.cs"
+"Assets/Scripts/PlacementState.cs"
+"Assets/Scripts/PreviewRoadPartsController.cs"
 -langversion:9.0
 
 /deterministic
