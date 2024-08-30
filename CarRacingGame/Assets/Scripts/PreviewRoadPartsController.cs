@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PreviewRoadPartsController : MonoBehaviour
@@ -55,23 +52,36 @@ public class PreviewRoadPartsController : MonoBehaviour
     public void StopShowingPreview()
     {
         cellTag.SetActive(false);
-        Destroy(_previewObject);
+
+        if(_previewObject != null) Destroy(_previewObject);
     }
 
     public void UpdatePosition(Vector3 pos, bool validity)
     {
-        MovePreview(pos);
+        if (_previewObject != null)
+        {
+            MovePreview(pos);
+            ApplyFeedbackToPreview(validity);
+        }
+
         MoveCellTag(pos);
-        ApplyFeedback(validity);
+        ApplyFeedbackToCursor(validity);
     }
 
-    private void ApplyFeedback(bool validity)
+    private void ApplyFeedbackToPreview(bool validity)
     {
         Color color = validity ? Color.white : Color.red;
-        _celTagRenderer.material.color = color;
         color.a = 0.5f;
         _previewMaterialInstance.color = color;
     }
+
+    private void ApplyFeedbackToCursor(bool validity)
+    {
+        Color color = validity ? Color.white : Color.red;
+        color.a = 0.5f;
+        _celTagRenderer.material.color = color;
+    }
+
 
     private void MoveCellTag(Vector3 pos)
     {
@@ -84,5 +94,12 @@ public class PreviewRoadPartsController : MonoBehaviour
     private void MovePreview(Vector3 pos)
     {
         _previewObject.transform.position = new Vector3(pos.x, pos.y + previewYOffset, pos.z);
+    }
+
+    public void StartShowingPreviewOfRemoving()
+    {
+        cellTag.SetActive(true);
+        PrepareCursor(Vector2Int.one);
+        ApplyFeedbackToCursor(false);
     }
 }

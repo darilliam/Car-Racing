@@ -371,7 +371,10 @@
 "Assets/Scripts/PlacementController.cs"
 "Assets/Scripts/PlacementInputManager.cs"
 "Assets/Scripts/PlacementState.cs"
+"Assets/Scripts/PlayButtonController.cs"
 "Assets/Scripts/PreviewRoadPartsController.cs"
+"Assets/Scripts/RemovingState.cs"
+"Assets/Scripts/SwitchCameraController.cs"
 -langversion:9.0
 
 /deterministic

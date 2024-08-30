@@ -41,6 +41,9 @@ public class CarController : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float handBrakeFrictionMultiplier = 2f;
 
+    [Header("Extra")]
+    [SerializeField] private PlayButtonController playButtonController;
+
 
     [Header("DEBUG")]
     // Kilometres per hour
@@ -85,6 +88,14 @@ public class CarController : MonoBehaviour
 
     private void CarMovement()
     {
+        if (playButtonController.GetPlayButtonState() == false)
+        {
+            foreach (var wheel in wheels)
+            {
+                wheel.wheelCollider.motorTorque = 0;
+            }
+            return;
+        }
 
         if (driveType == DriveType.allWheelDrive)
         {

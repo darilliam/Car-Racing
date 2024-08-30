@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PlacementController : MonoBehaviour
 {
-    [SerializeField] private GameObject mouseTag;
     [SerializeField] private Grid grid;
     [SerializeField] private PlacementInputManager inputManager;
     [SerializeField] private ObjectsDatabase objectsDatabase;
@@ -37,6 +36,16 @@ public class PlacementController : MonoBehaviour
         inputManager.OnExit += StopPlacement;
     }
 
+    public void StartRemoving()
+    {
+        StopPlacement();
+        gridPlaneVisualization.SetActive(true);
+        _builldingState = new RemovingState(grid, previewRoadPartsController, objectPlacer, _gridData, _roadData);
+
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
+    }
+
     private void PlaceStructure()
     {
         if(inputManager.IsPointerOverUI()) return;
@@ -47,7 +56,7 @@ public class PlacementController : MonoBehaviour
        _builldingState.OnAction(gridPos);
     }
 
-    private void StopPlacement()
+    public void StopPlacement()
     {
         if(_builldingState == null) return;
         gridPlaneVisualization.SetActive(false);
