@@ -10,6 +10,13 @@ public class PlayButtonController : MonoBehaviour
     [SerializeField] private SwitchCameraController switchCameraController;
     [SerializeField] private ObjectPlacer objectPlacer;
 
+    
+    private void Start()
+    {
+        CheckArrayAndSetButton();
+    }
+    
+
     public void OnPlayButtonPressed()
     {
         _isPlayButtonPressed = true;
@@ -20,12 +27,8 @@ public class PlayButtonController : MonoBehaviour
 
     public bool GetPlayButtonState() => _isPlayButtonPressed;
 
-    private void Update()
-    {
-        CheckArrayAndSetButton();
-    }
 
-    private void CheckArrayAndSetButton()
+    public void CheckArrayAndSetButton()
     {
         if (objectPlacer.GetPlaceObjectsCount() == 0)
         {
