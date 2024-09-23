@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2941427575208365665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6242433483885941907}
+  m_Layer: 7
+  m_Name: TurnRightUpRoadParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6242433483885941907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941427575208365665}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2107636890034450515}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4928519190787110760
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6242433483885941907}
+    m_Modifications:
+    - target: {fileID: 12284196825094081, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 856941453612709272, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642228838252352037, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244849175690523404, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546197984617906313, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693036685800808657, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3555830665574678576, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039522828708662580, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085227452989982670, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4558030055544185823, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913677309604060545, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Name
+      value: TurnRightUpRoadPart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913677309604060545, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105706738715686857, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+--- !u!4 &2107636890034450515 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6438540542732961595, guid: 639907acff23fbb46ac62a87888e014d, type: 3}
+  m_PrefabInstance: {fileID: 4928519190787110760}
+  m_PrefabAsset: {fileID: 0}

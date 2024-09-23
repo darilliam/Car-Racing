@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
@@ -338,5 +339,16 @@ public class CarController : MonoBehaviour
         _carRb.centerOfMass = _centerOfMass.localPosition;
 
         _carLightsController = GetComponent<CarLightsController>();
+    }
+    public void StartPlacingTrack()
+    {
+        this.enabled = false;
+        _carRb.isKinematic = true;
+    }
+
+    public void FinishPlacingTrack()
+    {
+        this.enabled = true;
+        _carRb.isKinematic = false;
     }
 }

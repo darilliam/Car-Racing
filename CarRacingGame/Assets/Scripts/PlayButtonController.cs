@@ -9,11 +9,13 @@ public class PlayButtonController : MonoBehaviour
     [SerializeField] private PlacementController placementController;
     [SerializeField] private SwitchCameraController switchCameraController;
     [SerializeField] private ObjectPlacer objectPlacer;
+    [SerializeField] private CarController carController;
 
-    
+
     private void Start()
     {
         CheckArrayAndSetButton();
+        carController.StartPlacingTrack();
     }
     
 
@@ -23,6 +25,7 @@ public class PlayButtonController : MonoBehaviour
         canvas.SetActive(false);
         placementController.StopPlacement();
         switchCameraController.CarCameraActive();
+        carController.FinishPlacingTrack();
     }
 
     public bool GetPlayButtonState() => _isPlayButtonPressed;

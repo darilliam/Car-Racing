@@ -13,11 +13,27 @@ MonoBehaviour:
   m_Name: Database
   m_EditorClassIdentifier: 
   objectData:
-  - <Name>k__BackingField: Straight Road With Parent
+  - <Name>k__BackingField: Straight Side Road With Parent
     <Id>k__BackingField: 0
     <Size>k__BackingField: {x: 3, y: 4}
     <Prefab>k__BackingField: {fileID: 7543980903553262025, guid: e2a9b7e5665d8bc4793539bce178ff7c, type: 3}
-  - <Name>k__BackingField: Turn Right Road With Parent
+  - <Name>k__BackingField: Straight Up Road With Parent
+    <Id>k__BackingField: 5
+    <Size>k__BackingField: {x: 4, y: 3}
+    <Prefab>k__BackingField: {fileID: 5622777314351549838, guid: 70881c8dad398a04e96df1088abdee40, type: 3}
+  - <Name>k__BackingField: Turn Right Down Road With Parent
     <Id>k__BackingField: 1
     <Size>k__BackingField: {x: 6, y: 7}
     <Prefab>k__BackingField: {fileID: 6293938587869756455, guid: f79492e560c27ad489ba55b1258ce470, type: 3}
+  - <Name>k__BackingField: Turn Right Up Road With Parent
+    <Id>k__BackingField: 2
+    <Size>k__BackingField: {x: 1, y: 6}
+    <Prefab>k__BackingField: {fileID: 2941427575208365665, guid: f11241f62556a86498ba9f9434c6e03d, type: 3}
+  - <Name>k__BackingField: Turn Left Down Road With Parent
+    <Id>k__BackingField: 3
+    <Size>k__BackingField: {x: 6, y: 7}
+    <Prefab>k__BackingField: {fileID: 2716134412176814607, guid: d706b7d1e7610b245acc02cc38d796a6, type: 3}
+  - <Name>k__BackingField: Turn Left Up Road With Parent
+    <Id>k__BackingField: 4
+    <Size>k__BackingField: {x: 7, y: 6}
+    <Prefab>k__BackingField: {fileID: 5192177914396051667, guid: adb354f74f0927c49b99742b25e34cb0, type: 3}
